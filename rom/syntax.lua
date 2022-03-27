@@ -4,15 +4,19 @@
 -- A rule takes the form of a triplet of functions:
 --  - The first function takes a single character, and returns
 --    whether that character is valid as part of the corresponding
---    token.
+--    token.  Called once, at the beginning of every token.
+--
 --  - The second function takes a single character and the current
 --    token, and returns whether that character is valid as part
 --    of the token.  This allows flexible implementations of highly
---    language-specific features such as strings.
---  - The third function takes only a token, and returns whether
---    that token is valid.
+--    language-specific features such as strings.  Called for every
+--    character in the token, until it returns false.
 --
--- Multiple tokens may be evaluated in parallel and the longest is returned.
+--  - The third function takes only a token, and returns whether
+--    that token is valid.  Called when all the parallel evaluations
+--    complete to ensure that the token is actually valid.
+--
+-- Multiple tokens are evaluated in parallel and the longest is returned.
 
 local lib = {}
 
